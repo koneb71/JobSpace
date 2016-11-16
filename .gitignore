@@ -1,1 +1,3 @@
-*.pycg
+*.pyc
+.idea
+g
