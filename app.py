@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, g
+from flask import render_template
 from flask_httpauth import HTTPTokenAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as JWT
 from werkzeug.utils import secure_filename
@@ -20,7 +21,6 @@ basedir = os.path.abspath(os.path.dirname(UPLOAD_FOLDER))
 
 auth = HTTPTokenAuth('Bearer')
 CORS(flask_app, supports_credentials=True)
-
 
 @auth.verify_token
 def verify_token(token):
@@ -80,6 +80,20 @@ def new_user():
         return jsonify({'status': 'ok', 'message': res[0][0]})
 
     return jsonify({'status': 'ok', 'message': res[0][0]})
+
+
+@flask_app.route('/api/v1.0/question/create', methods=['POST'])
+def new_question():
+    data = json.loads(request.data)
+
+    res = call_stored_procedure("newquestion", (
+            data['name'], int(data['one_way_interview_id'])
+    ), False)
+
+    if 'Error' in res[0][0]:
+        return jsonify({'status': 'ok', 'message': res[0][0]})
+
+    return jsonify({'status': 'ok', 'message': 'Question Added'})
 
 
 @flask_app.route('/api/v1.0/user/<id>/', methods=['GET'])

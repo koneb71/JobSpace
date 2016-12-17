@@ -63,3 +63,25 @@ $$
   END;
 $$
   LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION newquestion(par_name VARCHAR, par_id INT )
+  RETURNS TEXT AS
+$$
+DECLARE
+  loc_res   TEXT;
+BEGIN
+    IF par_name = ''
+    then
+      loc_res = 'Error';
+
+    ELSE
+      INSERT INTO question (name, one_way_interview_id )
+      VALUES (par_name, par_id);
+      loc_res = 'OK';
+    END IF;
+
+  RETURN loc_res;
+
+END;
+$$
+LANGUAGE 'plpgsql';

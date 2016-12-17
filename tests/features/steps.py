@@ -71,3 +71,13 @@ def then_i_should_get_a_200_response(step, expected_status_code):
 def message_res(step):
     world.respn = json.loads(world.response.data)
     assert_equals(world.respn['message'], "Successfully Logged In")
+
+
+@step(u'Given the details:')
+def given_the_details(step):
+    world.data = step.hashes[0]
+
+@step(u'When I submit it')
+def when_i_submit_it(step):
+    world.browser = TestApp(app)
+    world.response = world.app.post('/api/v1.0/question/create', data=json.dumps(world.data))
