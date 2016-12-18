@@ -85,3 +85,25 @@ BEGIN
 END;
 $$
 LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION new_one_way_interview(par_interviewer INT, par_applicant INT )
+  RETURNS TEXT AS
+$$
+DECLARE
+  loc_res   TEXT;
+BEGIN
+    IF par_interviewer isnull or par_applicant isnull
+    then
+      loc_res = 'Error';
+
+    ELSE
+      INSERT INTO one_way_interview (interviewer_id, applicant_id, created_time)
+      VALUES (par_interviewer, par_applicant, current_date);
+      loc_res = 'OK';
+    END IF;
+
+  RETURN loc_res;
+
+END;
+$$
+LANGUAGE 'plpgsql';

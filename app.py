@@ -95,6 +95,18 @@ def new_question():
 
     return jsonify({'status': 'ok', 'message': 'Question Added'})
 
+@flask_app.route('/api/v1.0/onewayinterview/create', methods=['POST'])
+def new_one_way_interview():
+    data = json.loads(request.data)
+
+    res = call_stored_procedure("new_one_way_interview", (
+            int(data['interviewer_id']), int(data['applicant_id'])
+    ), False)
+
+    if 'Error' in res[0][0]:
+        return jsonify({'status': 'ok', 'message': res[0][0]})
+
+    return jsonify({'status': 'ok', 'message': 'Success!'})
 
 @flask_app.route('/api/v1.0/user/<id>/', methods=['GET'])
 def getuser(id):
