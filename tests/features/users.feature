@@ -86,24 +86,3 @@ Feature: Adding, Updating, and Retrieve User details
 #		When I click the deactivate button
 #		Then i will get a '200' response
 #		And it should have a field "status" containing "success"
-
-
-Scenario: Get User
-    Given user id '1' is in the system
-    When I retrieve the user '1'
-    Then I get the '200' response
-    And the following user details are shown:
-      | id | fname | mname | lname | email | birthday | gender | acc_level | title | status |
-      | 1       | Dexter  | Atis | Esin | god_dexter@yahoo.com | Sat, 19 Aug 1995 00:00:00 GMT | male | 1 | White Hat Hacker | unemployed |
-
-
-Scenario: Get User not in the Database
-    Given I access the user id '4'
-    When I retrieve the user JSON result
-    Then I get the '200' response
-    And it should have a user field 'status' containing 'ok'
-    And it should have a user field 'message' containing 'No entries found'
-    And it should have a user field 'count' containing '0'
-    And it should have an empty field 'entries'
-
-

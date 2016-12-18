@@ -36,33 +36,19 @@ END;
 $$
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION get_users(par_email VARCHAR, par_fname VARCHAR, par_mname VARCHAR, par_lname VARCHAR, par_birthday DATE, par_gender VARCHAR, par_acc_level INT, par_title VARCHAR, par_status VARCHAR)
-  RETURNS SETOF RECORD AS
-$$
-SELECT
-  email,
-  fname,
-  mname,
-  lname,
-  birthday,
-  gender,
-  acc_level,
-  title,
-  status
-FROM users;
-$$
-LANGUAGE 'sql';
-
-CREATE OR REPLACE FUNCTION getpassword(IN par_username VARCHAR(100)) returns VARCHAR as
+CREATE OR REPLACE FUNCTION getpassword(IN par_email VARCHAR, IN par_password VARCHAR) returns text as
 $$
   declare
     loc_password text;
+    loc_res text;
   begin
-     select into loc_password password from users where username = par_username;
+     select into loc_password password from user_account where email = par_email;
      if loc_password isnull then
-       loc_password = 'null';
+       loc_res = 'Error';
+    ELSE
+       loc_res = 'Success';
      end if;
-     return loc_password;
+     return loc_res;
  end;
 $$
 LANGUAGE 'plpgsql';
