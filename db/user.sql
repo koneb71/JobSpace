@@ -36,6 +36,37 @@ END;
 $$
 LANGUAGE 'plpgsql';
 
+CREATE OR REPLACE FUNCTION get_users(par_email VARCHAR, par_fname VARCHAR, par_mname VARCHAR, par_lname VARCHAR, par_birthday DATE, par_gender VARCHAR, par_acc_level INT, par_title VARCHAR, par_status VARCHAR)
+  RETURNS SETOF RECORD AS
+$$
+SELECT
+  email,
+  fname,
+  mname,
+  lname,
+  birthday,
+  gender,
+  acc_level,
+  title,
+  status
+FROM users;
+$$
+LANGUAGE 'sql';
+
+CREATE OR REPLACE FUNCTION getpassword(IN par_username VARCHAR(100)) returns VARCHAR as
+$$
+  declare
+    loc_password text;
+  begin
+     select into loc_password password from users where username = par_username;
+     if loc_password isnull then
+       loc_password = 'null';
+     end if;
+     return loc_password;
+ end;
+$$
+LANGUAGE 'plpgsql';
+
 create or replace function get_user(In par_id INT ,OUT VARCHAR, OUT VARCHAR, OUT VARCHAR, OUT VARCHAR, OUT DATE, OUT VARCHAR, OUT INT, OUT VARCHAR, OUT VARCHAR, OUT BOOLEAN) RETURNS SETOF RECORD AS
 $$
 
