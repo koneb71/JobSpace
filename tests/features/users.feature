@@ -87,32 +87,3 @@ Feature: Adding, Updating, and Retrieve User details
 #		Then i will get a '200' response
 #		And it should have a field "status" containing "success"
 
-Feature: Log In and Log Out
-
-  Scenario: Log In
-    Given I am on "/"
-    When I follow "Log In"
-      And I fill in "Username" with "dextergod"
-      And I fill in "Password" with "testpassword"
-      And I press "Log in"
-    Then I should see "Log out"
-      And I should see "My account"
-
-  Scenario: Logs Out
-    Given I am on "/"
-    When I follow "Log In"
-      And I fill in "Username" with "dextergod"
-      And I fill in "Password" with "testpassword"
-      And I press "Log in"
-      And I follow "Log out"
-    Then I should see "Log in"
-      And I should not see "My account"
-
-  Scenario: Log In With Wrong Credentials
-    Given I am on "/"
-    When I follow "Log In"
-      And I fill in "Username" with "dexterbot"
-      And I fill in "Password" with "textpassword"
-      And I press "Log in"
-    Then I should see "Sorry, unrecognized username or password."
-      And I should not see "My account"

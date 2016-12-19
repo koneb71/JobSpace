@@ -45,7 +45,7 @@ def allowed_file(filename):
 """routes"""
 
 
-@flask_app.route('/api/v1.0/user/login/', methods=['POST'])
+@flask_app.route('/api/v1.0/user/login', methods=['POST'])
 def login():
     data = json.loads(request.data)
 

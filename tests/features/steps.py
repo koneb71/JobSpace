@@ -106,3 +106,23 @@ def when_i_send_an_one_way_interview_to(step):
 def and_when_i_click_the_invite_button(step):
     world.response = world.app.post('/api/v1.0/onewayinterview/create', data=json.dumps(
         {'interviewer_id': world.interviewee['id'], 'applicant_id': world.applicant['id']}))
+
+
+
+"""Login"""
+
+
+@step("login details")
+def given_login_details(step):
+    world.login = step.hashes[0]
+
+
+@step("I click login button")
+def when_i_click_login_button(step):
+    world.browser = TestApp(app)
+    world.response = world.app.post('/api/v1.0/user/login', data = json.dumps(world.login))
+
+@step('message "Successfully Logged In" is returned')
+def message_res(step):
+    world.respn = json.loads(world.response.data)
+    assert_equals(world.respn['message'], "Successfully Logged In")
